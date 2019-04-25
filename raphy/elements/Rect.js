@@ -49,11 +49,28 @@ class Rect extends BaseElement {
   }
 
   addIcon() {
-    const { icon } = this.options;
-    if (icon) {
+    const { icon, iconType = 'url', color } = this.options;
+    if (!icon) return;
+    if (iconType === 'url') {
       const iconSvg = this.drawer.image(icon).addClass('marker-image').size(30, 30);
       this.addMarker(iconSvg, 'topLeft', 6, 10);
+    } else {
+      const iconBg = this.drawer.rect(30, 30).radius(5).fill(color).addClass('marker-image-bg');
+      this.addMarker(iconBg, 'topLeft', 6, 10);
+      const iconSvg = this.drawer.group().addClass('marker-image').attr('fill-rule', 'evenodd');
+      iconSvg.svg(icon);
+      this.addMarker(iconSvg, 'topLeft', 9, 13);
     }
+  }
+
+  addAlertIcon() {
+    this.iconEl = this.drawer.path('m0,0l0,10.687459l4.499979,0l0,-10.687459l-4.499979,0zm0,14.249946l0,3.562486l4.499979,0l0,-3.562486l-4.499979,0z');
+    this.iconEl.size(3, 12).addClass('marker-alert');
+    this.addMarker(this.iconEl, 'topRight', -8, 3);
+  }
+
+  removeAlertIcon() {
+    this.iconEl && this.iconEl.remove();
   }
 
   addRemoveBtn() {

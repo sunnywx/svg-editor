@@ -33,10 +33,10 @@ class MainView extends React.Component {
     const count = countBy(this.raphy.store.elements, 'type');
     const id = option.id || shortid.generate();
     const typeCount = count[type] || 0;
-    const { icon, label, connectionType = 'primary', color, anchor } = sourceMapper[type];
+    const { icon, iconType, label, connectionType = 'primary', color, anchor } = sourceMapper[type];
     const title = option.label || `${label} ${typeCount + 1}`;
     const element = new Element({
-      id, type, label: title, icon, connectionType, color, anchor,
+      id, type, label: title, icon, iconType, connectionType, color, anchor,
     });
 
     return element;
@@ -157,8 +157,10 @@ class MainView extends React.Component {
 
     this.raphy.on('element.click', element => {
       console.log(element);
-      element.setLabel('aasdf');
+      element.addAlertIcon();
+      element.removeAlertIcon();
     });
+
     this.raphy.on('canvas.click', () => {
       console.log(123);
     });

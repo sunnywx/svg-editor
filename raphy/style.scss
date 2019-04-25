@@ -15,6 +15,11 @@
   stroke: #626e79;
   visibility: visible;
 }
+.Raphy-element:hover {
+  .marker-image, .marker-image-bg {
+    stroke: none;
+  }
+}
 
 .Raphy-element--focus .main-el, .Raphy-element--focus .marker-el,
 .Raphy-element--connectible .main-el, .Raphy-element--connectible .marker-el {
@@ -33,8 +38,13 @@
 }
 .Raphy-element .marker-image {
   visibility: visible!important;
-  color: #324558;
-  fill: #b6c2cd;
+  //color: #324558;
+  //fill: #b6c2cd;
+  color: rgb(255, 255, 255);
+  fill: rgb(199, 211, 224);
+}
+.Raphy-element .marker-image-bg {
+  visibility: visible!important;
 }
 .Raphy-element:hover .marker-text {
   fill: #626e79;
