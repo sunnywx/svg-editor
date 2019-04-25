@@ -49,7 +49,7 @@ class Rect extends BaseElement {
   }
 
   addIcon() {
-    const { icon, iconType = 'url', color } = this.options;
+    const { icon, iconType = 'svg', color } = this.options;
     if (!icon) return;
     if (iconType === 'url') {
       const iconSvg = this.drawer.image(icon).addClass('marker-image').size(30, 30);
