@@ -1,8 +1,8 @@
 import NodeDB from './NodeDB';
 
 class Tree {
-  constructor(config, treeId) {
-    this.reset(config, treeId);
+  constructor(config, treeId, treeStore) {
+    this.reset(config, treeId, treeStore);
 
     this.CONFIG = {
       maxDepth: 100,
@@ -18,6 +18,7 @@ class Tree {
       animateOnInitDelay: 500,
 
       padding: 15, // the difference is seen only when the scrollbar is shown
+      margin: 100, // the distance between trees
 
       connectors: {
         type: 'step', // 'curve' || 'step' || 'straight' || 'bCurve'
@@ -29,9 +30,10 @@ class Tree {
     };
   }
 
-  reset(config, treeId) {
+  reset(config, treeId, treeStore) {
     this.initJsonConfig = config;
     this.initTreeId = treeId;
+    this.treeStore = treeStore;
 
     this.id = treeId;
     this.nodeDB = new NodeDB(config.nodeStructure, this);
@@ -50,9 +52,17 @@ class Tree {
   positionTree() {
     const root = this.getRootNode();
     this.resetLevelData();
+    const lastTree = this.treeStore.getTree(this.id - 1);
+    // let offSetX = 0;
+    let offSetY = 0;
+    if (lastTree) {
+      const nodes = lastTree.nodeDB.db;
+      const lastNode = nodes[nodes.length - 1];
+      offSetY = lastNode.Y + this.CONFIG.margin;
+    }
 
     this.firstWalk(root, 0);
-    this.secondWalk(root, 0, 0, 0);
+    this.secondWalk(root, 0, offSetY, 0);
   }
 
   resetLevelData() {

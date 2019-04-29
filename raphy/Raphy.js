@@ -205,7 +205,7 @@ class Raphy extends EventEmitter2 {
     }
   }
 
-  autoLayout(centered = true) {
+  autoLayout() {
     const elements = this.store.export(true);
     const treeData = arrayToTree(elements, {
       parentProperty: 'parent',
@@ -216,16 +216,21 @@ class Raphy extends EventEmitter2 {
       data.parent = '';
       const tree = treeStore.createTree({ nodeStructure: data });
       tree.positionTree();
-      const nodes = tree.nodeDB.db;
-      let offsetX = 0;
-      let offsetY = 0;
-      if (centered) {
-        offsetX = 50;
-        const canvasHeight = document.getElementById(this.canvas.wrapperId).clientHeight;
-        const lastNodeY = nodes[nodes.length - 1].Y;
-        offsetY = (canvasHeight - lastNodeY) / 2;
-      }
+    });
+    const trees = treeStore.store;
+    const lastTree = trees[trees.length - 1];
+    const offsetX = 50;
+    let offsetY = 0;
+    if (lastTree) {
+      const lastNodes = lastTree.nodeDB.db;
+      const lastNodeY = lastNodes[lastNodes.length - 1].Y;
+      const canvasHeight = document.getElementById(this.canvas.wrapperId).clientHeight;
+      offsetY = (canvasHeight - lastNodeY) / 2;
+    }
+
+    trees.forEach(data => {
       let pseudo = {};
+      const nodes = data.nodeDB.db;
       nodes.forEach(node => {
         const id = node.realId;
         // add pseudo element?

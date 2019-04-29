@@ -8,7 +8,7 @@ class TreeStore {
 
   createTree(config) {
     const treeId = this.store.length;
-    const tree = new Tree(config, treeId);
+    const tree = new Tree(config, treeId, this);
     this.store.push(tree);
 
     return tree;
