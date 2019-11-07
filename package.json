@@ -4,6 +4,7 @@
   "description": "A graphic tool",
   "private": false,
   "main": "dist/raphy.min.js",
+  "module": "raphy/index.js",
   "files": [
     "dist"
   ],

@@ -1,13 +1,14 @@
 import OrthogonalRouter from './routers/OrthogonalRouter';
 import PolyLine from './lines/PolyLine';
 import CurveLine from './lines/CurveLine';
+import BezierLine from './lines/BezierCurveLine';
 
 class Connector {
-  constructor(source, target, raphy, type = 'primary') {
+  constructor(source, target, raphy, type) {
     this.id = `${source.id}@@${target.id}`;
     this.source = source;
     this.target = target;
-    this.type = type;
+    this.type = type || raphy.options.lineType || 'primary';
     this.raphy = raphy;
     // this.canvas = canvas;
     this.vertices = [];
@@ -21,6 +22,8 @@ class Connector {
     const points = this.getConnectionPoints();
     if (this.type === 'primary') {
       connection = new PolyLine(this.raphy, this.source.options.color);
+    } else if (this.type === 'bezier') {
+      connection = new BezierLine(this.raphy.drawer);
     } else {
       connection = new CurveLine(this.raphy, this.source.options.color);
     }
