@@ -2,6 +2,7 @@ import SVG from 'svg.js';
 import 'svg.draggable.js';
 import './plugins/svg.panzoom';
 import defaultsDeep from 'lodash/defaultsDeep';
+import pick from 'lodash/pick';
 
 class Canvas {
   constructor(mountHtmlId, raphy) {
@@ -21,8 +22,14 @@ class Canvas {
 
     this.wrapperId = this.createWrapperDiv(mountHtmlElement, this.mountHtmlId);
     const { width, height, drawGrid } = this.options;
+    const zoomOptions = pick(this.options, ['zoomMin', 'zoomMax', 'enableWheel']);
 
-    this.drawer = SVG(this.wrapperId).size(width, height).panZoom({ zoomMin: 0.8, zoomMax: 3, enableWheel: false });
+    this.drawer = SVG(this.wrapperId).size(width, height).panZoom({
+      zoomMin: 0.8,
+      zoomMax: 3,
+      enableWheel: true,
+      ...zoomOptions,
+    });
     this.setSvgId();
 
     if (drawGrid) {

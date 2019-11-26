@@ -75,6 +75,10 @@ class Raphy extends EventEmitter2 {
   }
 
   export(isSimple) {
+    const { elements, connections } = this.store;
+    if (typeof this.options.exportData === 'function') {
+      return this.options.exportData({ elements, connections });
+    }
     return this.store.export(isSimple);
   }
 
@@ -147,6 +151,10 @@ class Raphy extends EventEmitter2 {
 
     let source = sourceElement;
     let target = targetElement;
+
+    if (source.id === target.id) {
+      return;
+    }
     if (connectionType === 'c2p') {
       source = targetElement;
       target = sourceElement;

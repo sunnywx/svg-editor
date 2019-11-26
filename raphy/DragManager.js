@@ -1,4 +1,5 @@
 import Line from './connection/lines/StraightLine';
+import BezierCurveLine from './connection/lines/BezierCurveLine';
 
 class DragManager {
   constructor(raphy) {
@@ -6,7 +7,11 @@ class DragManager {
     this.canvas = raphy.drawer;
     this.store = raphy.store;
     this.options = raphy.options;
-    this.line = new Line(this.canvas);
+    if (this.options.lineType === 'bezier') {
+      this.line = new BezierCurveLine(this.canvas);
+    } else {
+      this.line = new Line(this.canvas);
+    }
     this.placeholderPoint = {};
     this.tmpConnection = null;
     this.isDragging = false;

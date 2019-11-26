@@ -1,4 +1,5 @@
 import findIndex from 'lodash/findIndex';
+import find from 'lodash/find';
 
 class Store {
   constructor() {
@@ -45,8 +46,7 @@ class Store {
   }
 
   getElement(id) {
-    const index = findIndex(this.elements, { id });
-    return this.elements[index];
+    return find(this.elements, { id });
   }
 
   addTmpConnectibleElements(element) {
