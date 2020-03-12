@@ -6,6 +6,29 @@ import './plugins/svg.filter';
 import defaultsDeep from 'lodash/defaultsDeep';
 import pick from 'lodash/pick';
 
+const gridPatterns = {
+  dot: [{
+    color: '#aaaaaa',
+    thickness: 1,
+    markup: 'rect',
+  }],
+  mesh: [{
+    color: '#aaaaaa',
+    thickness: 1,
+    markup: 'path',
+    render: option => {
+      let d = '';
+      const { width, height, thickness } = option;
+      if (width - thickness >= 0 && height - thickness >= 0) {
+        d = ['M', width, 0, 'H0 M0 0 V0', height].join(' ');
+      } else {
+        d = 'M 0 0 0 0';
+      }
+      return d;
+    },
+  }],
+};
+
 class Canvas {
   constructor(mountHtmlId, raphy) {
     this.mountHtmlId = mountHtmlId;
@@ -91,7 +114,7 @@ class Canvas {
     let patterStr = '';
     let gridStr = '';
     let svgPattern = '';
-    const gridPattern = drawGrid.name ? Canvas.gridPatterns[drawGrid.name] : Canvas.gridPatterns['dot'];
+    const gridPattern = drawGrid.name ? gridPatterns[drawGrid.name] : gridPatterns['dot'];
 
     gridPattern.forEach((pattern, index) => {
       pattern = defaultsDeep(drawGrid.option && drawGrid.option[index], pattern);
@@ -161,29 +184,6 @@ version='1.1' width='100%' height='100%'><defs>${patterStr}</defs>${gridStr}</sv
   handleDragOver(e) {
     e.preventDefault();
   }
-
-  static gridPatterns = {
-    dot: [{
-      color: '#aaaaaa',
-      thickness: 1,
-      markup: 'rect',
-    }],
-    mesh: [{
-      color: '#aaaaaa',
-      thickness: 1,
-      markup: 'path',
-      render: option => {
-        let d = '';
-        const { width, height, thickness } = option;
-        if (width - thickness >= 0 && height - thickness >= 0) {
-          d = ['M', width, 0, 'H0 M0 0 V0', height].join(' ');
-        } else {
-          d = 'M 0 0 0 0';
-        }
-        return d;
-      },
-    }],
-  };
 }
 
 export default Canvas;
