@@ -41,8 +41,9 @@ class DragManager {
     svgElement.on('dragend.raphy', event => {
       this.onDragEnd(svgElement, element, event);
     });
-    svgElement.on('dragmove.raphy', () => {
+    svgElement.on('dragmove.raphy', (ev) => {
       this.onDragMove(svgElement, element);
+      this.raphy.emit('element.moved', ev, svgElement, element);
     });
     svgElement.on('mouseover.raphy', () => {
       this.onMouseOver(svgElement, element);
@@ -73,6 +74,10 @@ class DragManager {
     this.canvas.addClass('Raphy--dragging');
     element.group.addClass(`${this.options.elementClassName}--dragging`);
     this.raphy.highlightConnectibleElement(element);
+    // on blur connectors
+    Object.keys(this.store.connections).forEach(key => {
+      this.store.connections[key].onBlur();
+    });
   }
 
   /**

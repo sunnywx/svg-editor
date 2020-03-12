@@ -20,6 +20,7 @@ class Raphy extends EventEmitter2 {
       background: false,
       preventContextMenu: true,
       elementClassName: 'Raphy-element',
+      lineClassName: 'Raphy-line',
       connectionPointRadius: 4,
     };
 
@@ -45,6 +46,7 @@ class Raphy extends EventEmitter2 {
     element.draw(this);
     this.dragManager.register(element);
     this.store.addElement(element);
+    this.emit('element.added', element);
   }
 
   import(data = []) {
@@ -62,7 +64,7 @@ class Raphy extends EventEmitter2 {
     data.forEach(item => {
       const { parent, subParent } = item;
       if (parent) {
-        this.addConnection(this.store.getElement(item.parent), this.store.getElement(item.id));
+        this.addConnection(this.store.getElement(parent), this.store.getElement(item.id));
       }
       if (Array.isArray(subParent) && subParent.length) {
         subParent.forEach(p => {
@@ -227,13 +229,15 @@ class Raphy extends EventEmitter2 {
     });
     const trees = treeStore.store;
     const lastTree = trees[trees.length - 1];
-    const offsetX = 50;
-    let offsetY = 0;
+    let offsetX = 100;
+    let offsetY = 100;
     if (lastTree) {
       const lastNodes = lastTree.nodeDB.db;
-      const lastNodeY = lastNodes[lastNodes.length - 1].Y;
-      const canvasHeight = document.getElementById(this.canvas.wrapperId).clientHeight;
-      offsetY = (canvasHeight - lastNodeY) / 2;
+      const lastNode = lastNodes[lastNodes.length - 1];
+      const $canvas = document.getElementById(this.canvas.wrapperId);
+      const boundRect = $canvas.getBoundingClientRect();
+      offsetY = ($canvas.clientHeight - lastNode.Y) / 2 - lastNode.height - boundRect.y;
+      offsetX = ($canvas.clientWidth - lastNode.X) / 2 - lastNode.width - boundRect.x;
     }
 
     trees.forEach(data => {

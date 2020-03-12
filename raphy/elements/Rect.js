@@ -34,7 +34,11 @@ class Rect extends BaseElement {
     if (label) {
       this.labelEl && this.labelEl.remove();
       this.label = label;
-      this.labelEl = this.drawer.text(this.label).font({ size: 12, anchor: 'start', fill: this.options.color }).addClass('marker-text');
+      this.labelEl = this.drawer.text(this.label).font({
+        size: 12,
+        anchor: 'start',
+        fill: this.options.color,
+      }).addClass('marker-text');
       this.addMarker(this.labelEl, 'topLeft', 40, 10);
     }
   }
@@ -43,7 +47,11 @@ class Rect extends BaseElement {
     if (id) {
       this.idLabel && this.idLabel.remove();
       this.id = id;
-      this.idLabel = this.drawer.text(this.id).font({ size: 12, anchor: 'start', fill: this.options.color }).addClass('marker-text');
+      this.idLabel = this.drawer.text(this.id).font({
+        size: 12,
+        anchor: 'start',
+        fill: this.options.color,
+      }).addClass('marker-text');
       this.addMarker(this.idLabel, 'topLeft', 40, 28);
     }
   }
@@ -74,10 +82,13 @@ class Rect extends BaseElement {
   }
 
   addRemoveBtn() {
-    const removeBtn = this.drawer.path('M13.4142136,12 L19.0710678,17.6568542 L17.6568542,19.0710678 L12,13.4142136 L6.34314575,19.0710678 L4.92893219,17.6568542 L10.5857864,12 L4.92893219,6.34314575 L6.34314575,4.92893219 L12,10.5857864 L17.6568542,4.92893219 L19.0710678,6.34314575 L13.4142136,12 Z').addClass('marker-tool');
-    removeBtn.size(10, 10).style({ cursor: 'pointer' });
-    removeBtn.click(() => this.remove());
-    this.addMarker(removeBtn, 'topRight', 6, -5);
+    if (this.removeBtn) {
+      this.removeBtn.remove();
+    }
+    this.removeBtn = this.drawer.path('M13.4142136,12 L19.0710678,17.6568542 L17.6568542,19.0710678 L12,13.4142136 L6.34314575,19.0710678 L4.92893219,17.6568542 L10.5857864,12 L4.92893219,6.34314575 L6.34314575,4.92893219 L12,10.5857864 L17.6568542,4.92893219 L19.0710678,6.34314575 L13.4142136,12 Z').addClass('marker-tool');
+    this.removeBtn.size(10, 10).style({ cursor: 'pointer' });
+    this.removeBtn.click(() => this.remove());
+    this.addMarker(this.removeBtn, 'topRight', 6, -5);
   }
 
   addConnectionPoints() {

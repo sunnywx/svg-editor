@@ -1,6 +1,8 @@
 import SVG from 'svg.js';
 import 'svg.draggable.js';
 import './plugins/svg.panzoom';
+import './plugins/svg.foreignobject';
+import './plugins/svg.filter';
 import defaultsDeep from 'lodash/defaultsDeep';
 import pick from 'lodash/pick';
 
@@ -143,12 +145,16 @@ version='1.1' width='100%' height='100%'><defs>${patterStr}</defs>${gridStr}</sv
   }
 
   clearFocus() {
-    const { focusElement } = this.store;
+    const { focusElement, focusLine } = this.store;
     const element = SVG.get(focusElement);
     if (element) {
       this.store.setFocusElement(null);
       const focusClassName = `${this.options.elementClassName}--focus`;
       element.removeClass(focusClassName);
+    }
+
+    if (focusLine) {
+      this.store.connections[focusLine].onBlur();
     }
   }
 

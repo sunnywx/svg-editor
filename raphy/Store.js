@@ -19,6 +19,10 @@ class Store {
     this.focusElement = element;
   }
 
+  setFocusLine(line) {
+    this.focusLine = line;
+  }
+
   setDraggingElement(element) {
     this.draggingElement = element;
   }
@@ -39,8 +43,7 @@ class Store {
     Object.keys(this.connections).forEach(key => {
       if (key.indexOf(id) > -1) {
         this.connections[key].remove();
-        this.connections[key] = null;
-        delete this.connections[key];
+        this.removeConnection(key);
       }
     });
   }
