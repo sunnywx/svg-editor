@@ -1,2 +1,65 @@
-.Raphy-element .main-el{-webkit-transition:200ms;transition:200ms}.Raphy-element--dragover .main-el{fill:#13a474;fill-opacity:0.1}.Raphy-element .marker-el{visibility:hidden}.Raphy-element:hover .main-el,.Raphy-element--dragging .main-el{stroke:#626e79}.Raphy-element:hover .marker-el,.Raphy-element--dragging .marker-el{stroke:#626e79;visibility:visible}.Raphy-element:hover .marker-image,.Raphy-element:hover .marker-image-bg{stroke:none}.Raphy-element--focus .main-el,.Raphy-element--focus .marker-el,.Raphy-element--connectible .main-el,.Raphy-element--connectible .marker-el{stroke:#13a474 !important;visibility:visible}.Raphy-element--focus .marker-text,.Raphy-element--connectible .marker-text{fill:#13a474 !important;font-weight:600}.Raphy-element .marker-text{visibility:visible !important;stroke:transparent !important;fill:#324558;font-weight:500}.Raphy-element .marker-image{visibility:visible !important;color:#fff;fill:#c7d3e0}.Raphy-element .marker-image-bg{visibility:visible !important}.Raphy-element:hover .marker-text{fill:#626e79;font-weight:600}.marker-point{-webkit-transition-duration:200ms;transition-duration:200ms;-webkit-transition-property:r;transition-property:r}.marker-point:hover,.Raphy-element__marker-point--dragging{r:5;stroke-width:2;stroke:#8b9cac}
+.Raphy-element .main-el {
+  -webkit-transition: 200ms;
+  transition: 200ms;
+}
+.Raphy-element--dragover .main-el {
+  fill: #13a474;
+  fill-opacity: 0.1;
+}
+.Raphy-element .marker-el {
+  visibility: hidden;
+}
+.Raphy-element:hover .main-el, .Raphy-element--dragging .main-el {
+  stroke: #626e79;
+}
+.Raphy-element:hover .marker-el, .Raphy-element--dragging .marker-el {
+  stroke: #626e79;
+  visibility: visible;
+}
+.Raphy-element:hover {
+  .marker-image, .marker-image-bg {
+    stroke: none;
+  }
+}
+
+.Raphy-element--focus .main-el, .Raphy-element--focus .marker-el,
+.Raphy-element--connectible .main-el, .Raphy-element--connectible .marker-el {
+  stroke: #13a474!important;
+  visibility: visible;
+}
+.Raphy-element--focus .marker-text, .Raphy-element--connectible .marker-text {
+  fill: #13a474!important;
+  font-weight: 600;
+}
+.Raphy-element .marker-text {
+  visibility: visible!important;
+  stroke: transparent!important;
+  fill: #324558;
+  font-weight: 500;
+}
+.Raphy-element .marker-image {
+  visibility: visible!important;
+  //color: #324558;
+  //fill: #b6c2cd;
+  color: rgb(255, 255, 255);
+  fill: rgb(199, 211, 224);
+}
+.Raphy-element .marker-image-bg {
+  visibility: visible!important;
+}
+.Raphy-element:hover .marker-text {
+  fill: #626e79;
+  font-weight: 600;
+}
+.marker-point {
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+  -webkit-transition-property: r;
+  transition-property: r;
+}
+.marker-point:hover, .Raphy-element__marker-point--dragging {
+  r: 5;
+  stroke-width: 2;
+  stroke: #8b9cac;
+}
 
