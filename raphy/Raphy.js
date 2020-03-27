@@ -1,13 +1,14 @@
 import { EventEmitter2 } from 'eventemitter2';
 import defaultsDeep from 'lodash/defaultsDeep';
 import isFunction from 'lodash/isFunction';
+import maxBy from 'lodash/maxBy';
 import arrayToTree from 'array-to-tree';
 import TreeStore from './layout/tree/TreeStore';
 import Canvas from './Canvas';
 import Store from './Store';
 import DragManager from './DragManager';
 import Connector from './connection/Connector';
-import './style.scss';
+import './style.css';
 
 class Raphy extends EventEmitter2 {
   constructor(mountHtmlId, options) {
@@ -49,7 +50,7 @@ class Raphy extends EventEmitter2 {
     this.emit('element.added', element);
   }
 
-  import(data = []) {
+  import(data = [], options = { autoLayout: true }) {
     if (!Array.isArray(data)) {
       throw new Error('wrong data format!');
     }
@@ -73,7 +74,9 @@ class Raphy extends EventEmitter2 {
       }
     });
 
-    this.autoLayout();
+    if (options.autoLayout) {
+      this.autoLayout();
+    }
   }
 
   export(isSimple) {
@@ -229,15 +232,18 @@ class Raphy extends EventEmitter2 {
     });
     const trees = treeStore.store;
     const lastTree = trees[trees.length - 1];
+    // find max item length tree
+    const maxLengthTree = maxBy(trees, tree => tree.nodeDB.db.length);
+    const maxLen = maxLengthTree.nodeDB.db.length;
     let offsetX = 100;
     let offsetY = 100;
     if (lastTree) {
       const lastNodes = lastTree.nodeDB.db;
       const lastNode = lastNodes[lastNodes.length - 1];
-      const $canvas = document.getElementById(this.canvas.wrapperId);
+      const $canvas = document.getElementById(this.canvas.svgId);
       const boundRect = $canvas.getBoundingClientRect();
       offsetY = ($canvas.clientHeight - lastNode.Y) / 2 - lastNode.height - boundRect.y;
-      offsetX = ($canvas.clientWidth - lastNode.X) / 2 - lastNode.width - boundRect.x;
+      offsetX = ($canvas.clientWidth - lastNode.X) / 2 - lastNode.width * maxLen - boundRect.x;
     }
 
     trees.forEach(data => {
