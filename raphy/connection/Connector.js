@@ -2,6 +2,7 @@ import OrthogonalRouter from './routers/OrthogonalRouter';
 import PolyLine from './lines/PolyLine';
 import CurveLine from './lines/CurveLine';
 import BezierLine from './lines/BezierCurveLine';
+import DependLine from './lines/DependLine';
 
 class Connector {
   constructor(source, target, raphy, type) {
@@ -43,6 +44,8 @@ class Connector {
       connection = new PolyLine(this.raphy, this.source.options.color);
     } else if (this.type === 'bezier') {
       connection = new BezierLine(this.raphy.drawer);
+    } else if (this.type === 'depend') {
+      connection = new DependLine(this.raphy.drawer, { stroke: '#9a5cd1' });
     } else {
       connection = new CurveLine(this.raphy, this.source.options.color);
     }
